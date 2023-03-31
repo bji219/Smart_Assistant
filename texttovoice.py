@@ -2,7 +2,7 @@ from IPython.display import Audio, display
 from google.cloud import texttospeech
 import os
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/Users/BrendanInglis/PycharmProjects/Whisper/gpt-voice-assistant-381804-f8132be95ba7.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/path/to/credentails/creds.json'
 
 def ttv(input_text):
     # Instantiates a client
