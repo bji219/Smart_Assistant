@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
 import openai
 
 def ask_gpt(query):
 # query = " What's the biggest difference between a champion, formula one driver and all the others?"
 
+    print("Asking GPT...")
     # example with a system message
     MODEL = "gpt-3.5-turbo"
 
@@ -15,6 +17,7 @@ def ask_gpt(query):
         temperature=0,
     )
     gpt_response = response['choices'][0]['message']['content']
+    print("GPT response:")
     print(gpt_response)
 
     return gpt_response

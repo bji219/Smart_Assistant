@@ -1,10 +1,13 @@
-from IPython.display import Audio, display
+#!/usr/bin/env python3
 from google.cloud import texttospeech
 import os
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/path/to/credentails/creds.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/Users/BrendanInglis/PycharmProjects/Whisper/gpt-voice-assistant-381804-f8132be95ba7.json'
 
 def ttv(input_text):
+
+    print("Transcribing text to voice...")
+
     # Instantiates a client
     client = texttospeech.TextToSpeechClient()
 

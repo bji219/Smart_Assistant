@@ -2,15 +2,15 @@ from recordaudio import record_wav
 from voicetotext import speech_to_text as stt
 from texttovoice import ttv
 from askgpt import ask_gpt
-from play_sound import play_sound # user func
+from play_sound import play_sound
 
 def main():
 
     # Get WAV from microphone.
     record_wav()
-
+    
     # Convert audio into text.
-    query = stt("input.wav")
+    query = stt()
 
     # Send text to ChatGPT.
     gpt_response = ask_gpt(query)
