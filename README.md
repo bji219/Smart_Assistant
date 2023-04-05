@@ -90,6 +90,8 @@ def speech_to_text(speech_file):
 ```
 
 ## ChatGPT API
+You can change this line ```{"role": "system", "content": "You must answer concisely as a helpful assistant."}``` to customize the AI assistant! For example, change it to ```{"role": "system", "content": "You must answer as Blackbeard the Pirate."}``` for some high-seas responses.
+
 ```python
 import openai
 
@@ -114,10 +116,12 @@ def ask_gpt(query):
 ```
 
 ## Google Cloud Texttospeech API
+Change the "name" variable to change the actual voice of the response! ```voice = texttospeech.VoiceSelectionParams(
+        language_code="en-US", name="en-US-Neural2-F",ssml_gender=texttospeech.SsmlVoiceGender.FEMALE
+    )```
+    
+Full function code:
 ```python
-from google.cloud import texttospeech
-import os
-
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/path/to/credentials/creds.json'
 
 def ttv(input_text):
@@ -150,6 +154,30 @@ def ttv(input_text):
 
     return
 ```
+## Apple Scripts and Shortcuts
+I figured out a hacky way to get rid of Siri once and for all... by using Siri along the way (lol). I have a custom voice command for Siri called "Jarvis", which will run a Shortcut that executes an Apple script:
+
+### Apple Script
+```apple
+on run {input, parameters}
+	tell application "Terminal"
+		do script "cd /path/to/shell/script && sh ./Jarvis.sh"
+	end tell
+	return input
+end run
+```
+
+### Bash Script (Jarvis.sh)
+```
+#!/usr/bin/env bash 
+cd /path/to/python/script
+source venv/bin/activate
+python3 smart_assist.py
+deactivate
+cd ~
+```
+
+Now Siri will circumvent itself with ChatGPT!
 
 # Improvements/To-Do
 - Recording length is set to 8 seconds, but ideally it would be arbitrary and dependent on the query length. A user would press and hold a button, speak the query, then release to end recording.
