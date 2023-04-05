@@ -4,7 +4,7 @@ Using OpenAI Whisper API, ChatGPT 3.5 turbo API, and Google Cloud Text to Speech
 ## Workflow and Main Execution 
 ### Record speech --> Speech to text --> Text to ChatGPT --> Text to Voice --> Play audio
 
-Notice that these are custom functions (just importing the functions from the other py files.
+Notice that these are custom functions (just importing the functions from the other py files).
 ```python
 def main():
 
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     main()
 ```
 
-## Python packages used (in no particular order)
+## Python packages used (in no particular order):
 ```python
 import time
 import os
@@ -37,29 +37,39 @@ import openai
 import whisper
 from google.cloud import texttospeech
 import pygame
+import math
 ```
 
 ## Background and Inspiration
-Inspired by [this post](https://www.hackster.io/nickbild/voicegpt-f88f8f) by Nick Bild on Hackster.io. His original project used a raspberry pi, 
+Inspired by [this post](https://www.hackster.io/nickbild/voicegpt-f88f8f) by Nick Bild on Hackster.io. His original project used a raspberry pi, but I decided to use my Mac and make a replacement for Siri!
 
 ## Record Speech (sounddevice)
+The function plays a 'bleep' sound to indicate when recording has started and finished (bleep not included! You'll have to download your own). It saves a .wav file of the input to the working directory.
+
 ```python
-import sounddevice as sd
-from scipy.io.wavfile import write
-
 def record_wav():
-
-    fs = 44100 # Sample rate
-    seconds = 8 # Duration of recording
+    # Sample rate + duration of recording
+    fs = 44100
+    seconds = 8
 
     # Get length of recording
-    print("Recording for " + str(seconds) + " seconds.")
-    print("Ask away!")
+    print("Recording for " + str(seconds) + " seconds...")
+
+    # Play noise to indicate recording for Siri
+    sounda = pygame.mixer.Sound("start_rec.wav")
+    sounda.play()
+
+    # Record input audio
     myrecording = sd.rec(int(seconds * fs), samplerate = fs, channels = 1)
     sd.wait() # Wait until recording is finished
 
     print("Recording complete.")
 
+    # Noise to indicate end of recording
+    soundb = pygame.mixer.Sound("stop_rec.wav")
+    soundb.play()
+
+    # Save input audio file
     write('input.wav', fs, myrecording) # Save as WAV file
 
     return
@@ -67,8 +77,6 @@ def record_wav():
 
 ## Whisper API
 ```python
-import whisper
-
 def speech_to_text(speech_file):
 
     # Whisper AI model from OpenAI
